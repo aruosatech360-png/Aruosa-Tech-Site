@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aruosa Tech</title>
+  <link rel="icon" href="Aruosa Tech.png" type="image/png" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+  <script>
+    // Apply theme from local storage or system preference to prevent FOUC
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800 transition-colors duration-300">
+  <!-- Loading Overlay -->
+   
+  <!-- Navbar -->
+  <nav class="fixed w-full bg-black/70 text-white z-20 backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <!-- Logo Image -->
+        <img src="Aruosa Tech.png" alt="Aruosa Tech Logo" class="w-10 h-10">
+        <span class="text-xl font-bold">Aruosa Tech</span>
+      </div>
+      <div class="flex gap-4 items-center">
+        <button id="darkToggle" class="px-3 py-1 rounded-lg border border-white hover:bg-white hover:text-black transition">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Banner -->
+  <section class="relative h-[75vh] flex items-center justify-center text-center text-white">
+    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+      <source src="Codes Webm.webm" type="video/webm">
+    </video>
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative z-10 animate-fadeIn">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4"> Welcome to Aruosa Tech</h1>
+      <p class="text-lg">Websites, Creativity, and Simplicity</p>
+    </div>
+  </section>
+
+  <!-- About Me -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="about">
+    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-6">About Me</h2>
+      <div class="flex flex-col items-center gap-6">
+        <img src="Me 2.jpg" alt="Profile" class="w-40 h-40 rounded-full shadow-lg" />
+        <p class="text-lg leading-relaxed">
+          I’m a passionate web developer who blends simplicity with functionality. My goal is to bring your ideas online with clean, modern design and smooth user experiences.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="about-us">
+    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-6">About Us</h2>
+      <p class="text-lg leading-relaxed">
+        We are a small team dedicated to building unique websites for our clients. Each project is tailored to fit your brand, vision, and goals.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="pricing">
+    <div class="max-w-6xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-10">Pricing</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Card -->
+        <!-- Basic -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gray-50 dark:bg-gray-800 hover:shadow-2xl transition transform hover:-translate-y-2 hover:scale-105">
+          <h3 class="text-xl font-semibold mb-2">Basic</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm h-16">Perfect for individuals and small businesses who need a quick online presence.</p>
+          <p class="text-4xl font-bold mb-4">₦40k - ₦80k</p>
+          <ul class="text-left list-disc list-inside space-y-2">
+            <li>Up to 5 pages (Home, About, etc.)</li>
+            <li>Mobile-friendly responsive design</li>
+            <li>Contact form + social media integration</li>
+            <li>Hosting setup included</li>
+            <li>Footer credit: “Website by AruosaTech”</li>
+          </ul>
+        </div>
+        <!-- Card -->
+        <!-- Standard -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-green-400 to-blue-500 text-white hover:shadow-2xl transition transform hover:-translate-y-2 hover:scale-110 ">
+          <h3 class="text-xl font-semibold mb-2">Standard</h3>
+          <p class="text-white/90 mb-4 text-sm h-16">For growing businesses and organizations that want a polished, professional website.</p>
+          <p class="text-4xl font-bold mb-4">₦100k - ₦200k</p>
+          <ul class="text-left list-disc list-inside space-y-2">
+            <li>5–10 pages with tailored design</li>
+            <li>Basic SEO optimization</li>
+            <li>Blog or simple content management system</li>
+            <li>One special feature (booking system, etc.)</li>
+            <li>Footer credit: “Website by AruosaTech”</li>
+          </ul>
+        </div>
+        <!-- Card -->
+        <!-- Premium -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:shadow-2xl transition transform hover:-translate-y-2 hover:scale-105">
+          <h3 class="text-xl font-semibold mb-2">Premium</h3>
+          <p class="text-white/90 mb-4 text-sm h-16">For clients who need complex, high-performance websites with advanced features.</p>
+          <p class="text-4xl font-bold mb-4">₦250k - ₦600k</p>
+          <ul class="text-left list-disc list-inside space-y-2">
+            <li>E-commerce stores or complex portals</li>
+            <li>Secure payment & user account integration</li>
+            <li>Performance optimization + analytics</li>
+            <li>1–3 months of free maintenance</li>
+            <li>No footer advert (fully white-label)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- See Samples -->
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="samples">
+    <div class="max-w-6xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-10">See Our Samples</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <img src="https://via.placeholder.com/400x250" alt="Sample 1" class="rounded-xl shadow-lg hover:scale-105 transition" />
+        <img src="https://via.placeholder.com/400x250" alt="Sample 2" class="rounded-xl shadow-lg hover:scale-105 transition" />
+        <img src="https://via.placeholder.com/400x250" alt="Sample 3" class="rounded-xl shadow-lg hover:scale-105 transition" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Socials -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="socials">
+    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-6">Connect With Me</h2>
+      <div class="flex justify-center gap-8 text-3xl">
+        <!-- Facebook -->
+        <a href="#" class="hover:text-blue-600 transition" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M22 12a10 10 0 10-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.3l-.4 3h-1.9v7A10 10 0 0022 12z"/>
+          </svg>
+        </a>
+        <!-- Twitter/X -->
+        <a href="#" class="hover:text-blue-400 transition" aria-label="Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M22 5.8c-.8.4-1.6.6-2.5.8a4.3 4.3 0 001.9-2.4 8.6 8.6 0 01-2.7 1 4.3 4.3 0 00-7.4 3v.8A12.2 12.2 0 013 4.6a4.3 4.3 0 001.3 5.7 4.3 4.3 0 01-2-.5v.1c0 2 1.4 3.8 3.4 4.2a4.4 4.4 0 01-2 .1c.6 1.8 2.3 3.2 4.3 3.2A8.7 8.7 0 012 19a12.2 12.2 0 006.6 2"/>
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="#" class="hover:text-pink-500 transition" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3.5A5.5 5.5 0 1017.5 13 5.5 5.5 0 0012 7.5zM12 9a4 4 0 11-4 4 4 4 0 014-4zm5.8-2.7a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/>
+          </svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="#" class="hover:text-blue-700 transition" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 3A2 2 0 0121 5v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.3 17v-7H6v7h2.3zm-1.1-8a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6zm10.8 8v-3.7c0-2-1.1-3-2.6-3-1.2 0-1.8.7-2.1 1.3h-.1V10H11v7h2.2v-3.6c0-.9.2-1.8 1.4-1.8s1.4 1 1.4 1.8V17H18z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us -->
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="contact">
+    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-6">Contact Us</h2>
+      <p class="mb-6">We’d love to hear from you! Reach us directly via:</p>
+      <div class="flex flex-col gap-4 items-center">
+        <a href="https://wa.me/+2347058293576" target="_blank" class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">💬 WhatsApp</a>
+        <a href="mailto:aruosatech360@gmail.com" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">✉️ Email</a>
+        <a href="tel:+2347058293576" class="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition">📞 Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-6 bg-black text-white text-center">
+    <p>&copy; 2025 Aruosa Tech. All rights reserved.</p>
+  </footer>
+
+   <div class="py-8 flex justify-center">
+    <img src="Aruosa Tech.png" alt="AruosaTech Logo" class="h-12 w-12 animate-custom-bounce opacity-70">
+  </div>
+
+
+  <!-- Animations -->
+  <style>
+    .animate-fadeIn { animation: fadeIn 2s ease-in-out; }
+    .animate-fadeInUp { animation: fadeInUp 1s ease-in-out; }
+    @keyframes fadeIn { from {opacity:0} to {opacity:1} }
+    @keyframes fadeInUp { from {opacity:0; transform:translateY(30px)} to {opacity:1; transform:translateY(0)} }
+  </style>
+
+  <!-- Dark Mode Script -->
+  <script>
+    const darkToggleButton = document.getElementById('darkToggle');
+    const htmlElement = document.documentElement;
+
+    // Function to update the button icon based on the current theme
+    const updateButton = () => {
+      if (darkToggleButton) { // Check if the button exists
+        if (htmlElement.classList.contains('dark')) {
+          darkToggleButton.innerHTML = '☀️'; // Sun icon
+        } else {
+          darkToggleButton.innerHTML = '🌙'; // Moon icon
+        }
+      }
+    };
+
+    // Set the initial icon state when the script runs
+    updateButton();
+
+    // Add the click event listener to the toggle button
+    if (darkToggleButton) {
+      darkToggleButton.addEventListener('click', () => {
+        // Toggle the 'dark' class on the <html> element
+        htmlElement.classList.toggle('dark');
+        
+        // Update the theme in localStorage
+        localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+
+        // Update the button icon to reflect the new theme
+        updateButton();
+      });
+    }
+  </script>
+
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); }
+  #loading-overlay {
+    transition: opacity 0.5s ease-out;
+  }
+  @keyframes custom-bounce {
+    0%, 100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+  .animate-custom-bounce { animation: custom-bounce 1s infinite; }
+  </style>
+
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
