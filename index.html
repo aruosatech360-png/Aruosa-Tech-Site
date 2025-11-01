@@ -5,17 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aruosa Tech</title>
   <link rel="icon" href="Aruosa Tech.png" type="image/png" />
+  <!-- Google Font for elegant handwriting -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            handwriting: ['"Great Vibes"', 'cursive'],
+          }
+        }
+      }
     }
   </script>
   <script>
     // Apply theme from local storage or system preference to prevent FOUC
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
+    // Set theme based on time of day (daytime: 6am to 7pm)
+    const hour = new Date().getHours();
+    if (hour >= 6 && hour < 19) { // 6:00 AM to 6:59 PM is considered day
+      document.documentElement.classList.remove('dark'); // Light mode
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('dark'); // Dark mode
     }
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -33,20 +44,86 @@
       <span class="dot-3">.</span>
     </div>
   </div>
-  <!-- Navbar -->
-  <nav class="fixed w-full bg-black/70 text-white z-20 backdrop-blur-sm">
-    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
-      <!-- Logo -->
-      <div class="flex items-center gap-2">
-        <!-- Logo Image -->
-        <img src="Aruosa Tech.png" alt="Aruosa Tech Logo" class="w-10 h-10">
-        <span class="text-xl font-bold">Aruosa Tech</span>
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-cyan-500 shadow-lg">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo with glitch effect -->
+        <h1 class="text-2xl md:text-3xl font-extrabold text-cyan-400 relative glitch" data-text="Aruosa Tech">
+          Aruosa Tech
+        </h1>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex space-x-6 text-lg">
+          <a href="#about" class="relative group">
+            <span class="text-gray-300 group-hover:text-cyan-400 transition">About</span>
+            <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all"></span>
+          </a>
+          <a href="#services" class="relative group">
+            <span class="text-gray-300 group-hover:text-cyan-400 transition">Services</span>
+            <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all"></span>
+          </a>
+          <a href="#testimonials" class="relative group">
+            <span class="text-gray-300 group-hover:text-cyan-400 transition">Testimonials</span>
+            <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all"></span>
+          </a>
+          <a href="#process" class="relative group">
+            <span class="text-gray-300 group-hover:text-cyan-400 transition">Process</span>
+            <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all"></span>
+          </a>
+          <a href="#pricing" class="relative group">
+            <span class="text-gray-300 group-hover:text-cyan-400 transition">Pricing</span>
+            <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all"></span>
+          </a>
+          <a href="#samples" class="relative group">
+            <span class="text-gray-300 group-hover:text-cyan-400 transition">Samples</span>
+            <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all"></span>
+          </a>
+          <a href="#contact" class="relative group">
+            <span class="text-gray-300 group-hover:text-cyan-400 transition">Contact</span>
+            <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all"></span>
+          </a>
+        </nav>
+
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 p-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path class="mobile-menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Flashing code element -->
+        <button id="header-toggle" aria-expanded="false" aria-controls="header-container"
+          class="hidden md:flex items-center text-2xl font-mono overflow-hidden whitespace-nowrap border-r-2 border-cyan-400 text-cyan-400 px-3 py-2 rounded-md bg-gray-900/60 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-cyan-400">
+          &lt;/&gt;
+        </button>
       </div>
-      <div class="flex gap-4 items-center">
-        <button id="darkToggle" class="px-3 py-1 rounded-lg border border-white hover:bg-white hover:text-black transition">🌙</button>
+
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden md:hidden py-4">
+        <nav class="flex flex-col space-y-4">
+          <a href="#about" class="text-gray-300 hover:text-cyan-400 transition">About</a>
+          <a href="#services" class="text-gray-300 hover:text-cyan-400 transition">Services</a>
+          <a href="#testimonials" class="text-gray-300 hover:text-cyan-400 transition">Testimonials</a>
+          <a href="#process" class="text-gray-300 hover:text-cyan-400 transition">Process</a>
+          <a href="#pricing" class="text-gray-300 hover:text-cyan-400 transition">Pricing</a>
+          <a href="#samples" class="text-gray-300 hover:text-cyan-400 transition">Samples</a>
+          <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition">Contact</a>
+        </nav>
       </div>
     </div>
-  </nav>
+
+    <!-- Glowing animated border -->
+    <div class="h-0.5 bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-cyan-500 animate-pulse"></div>
+  </header>
+
+  <!-- Add padding to body to prevent content from going under fixed header -->
+  <style>
+    body {
+      padding-top: 4rem;
+    }
+  </style>
 
   <!-- Banner -->
   <section class="relative h-[75vh] flex items-center justify-center text-center text-white">
@@ -60,42 +137,73 @@
     </div>
   </section>
 
-  <!-- About Me -->
-  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="about">
-    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
-      <h2 class="text-3xl font-bold mb-6">About Me</h2>
-      <div class="flex flex-col items-center gap-6">
-        <img src="Me 2.jpg" alt="Profile" class="w-40 h-40 rounded-full shadow-lg" />
-        <p class="text-lg leading-relaxed">
-          I’m a passionate web developer who blends simplicity with functionality. My goal is to bring your ideas online with clean, modern design and smooth user experiences.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Us -->
-  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="about-us">
-    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
-      <h2 class="text-3xl font-bold mb-6">About Us</h2>
-      <p class="text-lg leading-relaxed">
-        We are a small team dedicated to building unique websites for our clients. Each project is tailored to fit your brand, vision, and goals.
+  <!-- Elegant Caption -->
+  <section class="py-12 px-6 bg-gray-50 dark:bg-gray-900 text-center">
+    <div class="max-w-4xl mx-auto animate-fadeInUp">
+      <p class="font-handwriting text-4xl md:text-5xl text-cyan-600 dark:text-cyan-400 leading-tight italic">
+        "We're not just making websites, we're making you happy."
       </p>
     </div>
   </section>
 
+  <!-- Services Section -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="services">
+    <div class="max-w-6xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-10">Our Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Service Card 1 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gray-50 dark:bg-gray-800 hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-5xl text-cyan-500 mb-4">💻</div>
+          <h3 class="text-xl font-semibold mb-2">Custom Web Design</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">Crafting unique, responsive, and visually stunning websites tailored to your brand.</p>
+        </div>
+        <!-- Service Card 2 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gray-50 dark:bg-gray-800 hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-5xl text-cyan-500 mb-4">🛒</div>
+          <h3 class="text-xl font-semibold mb-2">E-commerce Solutions</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">Building secure and scalable online stores to help you sell products and services.</p>
+        </div>
+        <!-- Service Card 3 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gray-50 dark:bg-gray-800 hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-5xl text-cyan-500 mb-4">📈</div>
+          <h3 class="text-xl font-semibold mb-2">SEO & Performance</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">Optimizing your site for search engines and ensuring fast loading times for better user experience.</p>
+        </div>
+        <!-- Service Card 4 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gray-50 dark:bg-gray-800 hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-5xl text-cyan-500 mb-4">🛠️</div>
+          <h3 class="text-xl font-semibold mb-2">Website Maintenance</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">Keeping your website updated, secure, and running smoothly with ongoing support.</p>
+        </div>
+        <!-- Service Card 5 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gray-50 dark:bg-gray-800 hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-5xl text-cyan-500 mb-4">✍️</div>
+          <h3 class="text-xl font-semibold mb-2">Content Management</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">Implementing user-friendly CMS platforms (like WordPress) for easy content updates.</p>
+        </div>
+        <!-- Service Card 6 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-gray-50 dark:bg-gray-800 hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-5xl text-cyan-500 mb-4">🎨</div>
+          <h3 class="text-xl font-semibold mb-2">UI/UX Design</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">Designing intuitive and engaging user interfaces for optimal user experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Pricing -->
-  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="pricing">
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="pricing">
     <div class="max-w-6xl mx-auto text-center animate-fadeInUp">
       <h2 class="text-3xl font-bold mb-10">Pricing</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Card -->
         <!-- Basic -->
-        <div class="p-6 rounded-2xl shadow-lg bg-gray-50 dark:bg-gray-800 hover:shadow-2xl transition transform hover:-translate-y-2 hover:scale-105">
+        <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-gray-900 hover:shadow-2xl transition transform hover:-translate-y-2 hover:scale-105">
           <h3 class="text-xl font-semibold mb-2">Basic</h3>
           <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm h-16">Perfect for individuals and small businesses who need a quick online presence.</p>
-          <p class="text-4xl font-bold mb-4">₦40k - ₦80k</p>
+          <p class="text-4xl font-bold mb-4">₦20k - ₦40k</p>
           <ul class="text-left list-disc list-inside space-y-2">
-            <li>Up to 5 pages (Home, About, etc.)</li>
+            <li>Up to 3 pages (Home, About, etc.)</li>
             <li>Mobile-friendly responsive design</li>
             <li>Contact form + social media integration</li>
             <li>Hosting setup included</li>
@@ -107,7 +215,7 @@
         <div class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-green-400 to-blue-500 text-white hover:shadow-2xl transition transform hover:-translate-y-2 hover:scale-110 ">
           <h3 class="text-xl font-semibold mb-2">Standard</h3>
           <p class="text-white/90 mb-4 text-sm h-16">For growing businesses and organizations that want a polished, professional website.</p>
-          <p class="text-4xl font-bold mb-4">₦100k - ₦200k</p>
+          <p class="text-4xl font-bold mb-4">₦50k - ₦60k</p>
           <ul class="text-left list-disc list-inside space-y-2">
             <li>5–10 pages with tailored design</li>
             <li>Basic SEO optimization</li>
@@ -121,7 +229,7 @@
         <div class="p-6 rounded-2xl shadow-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:shadow-2xl transition transform hover:-translate-y-2 hover:scale-105">
           <h3 class="text-xl font-semibold mb-2">Premium</h3>
           <p class="text-white/90 mb-4 text-sm h-16">For clients who need complex, high-performance websites with advanced features.</p>
-          <p class="text-4xl font-bold mb-4">₦250k - ₦600k</p>
+          <p class="text-4xl font-bold mb-4">₦70k - ₦100k</p>
           <ul class="text-left list-disc list-inside space-y-2">
             <li>E-commerce stores or complex portals</li>
             <li>Secure payment & user account integration</li>
@@ -134,20 +242,229 @@
     </div>
   </section>
 
-  <!-- See Samples -->
-  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="samples">
+  <!-- Our Process -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="process">
     <div class="max-w-6xl mx-auto text-center animate-fadeInUp">
-      <h2 class="text-3xl font-bold mb-10">See Our Samples</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <img src="https://via.placeholder.com/400x250" alt="Sample 1" class="rounded-xl shadow-lg hover:scale-105 transition" />
-        <img src="https://via.placeholder.com/400x250" alt="Sample 2" class="rounded-xl shadow-lg hover:scale-105 transition" />
-        <img src="https://via.placeholder.com/400x250" alt="Sample 3" class="rounded-xl shadow-lg hover:scale-105 transition" />
+      <h2 class="text-3xl font-bold mb-10">Our Process</h2>
+      <div class="relative">
+        <!-- Dotted line for desktop -->
+        <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 border-t-2 border-dashed border-cyan-500/50 -translate-y-1/2"></div>
+        
+        <div class="relative grid grid-cols-1 md:grid-cols-4 gap-12">
+          <!-- Step 1: Discovery -->
+          <div class="flex flex-col items-center text-center">
+            <div class="w-24 h-24 mb-4 rounded-full bg-cyan-500/20 dark:bg-cyan-400/30 flex items-center justify-center text-3xl text-cyan-500 dark:text-cyan-300 border-4 border-white dark:border-gray-800">1</div>
+            <h3 class="font-semibold text-lg mb-2">Discovery</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">We start by understanding your vision, goals, and requirements for the project.</p>
+          </div>
+          
+          <!-- Step 2: Design -->
+          <div class="flex flex-col items-center text-center">
+            <div class="w-24 h-24 mb-4 rounded-full bg-cyan-500/20 dark:bg-cyan-400/30 flex items-center justify-center text-3xl text-cyan-500 dark:text-cyan-300 border-4 border-white dark:border-gray-800">2</div>
+            <h3 class="font-semibold text-lg mb-2">Design</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">We create a modern, user-friendly design and prototype for your approval.</p>
+          </div>
+
+          <!-- Step 3: Development -->
+          <div class="flex flex-col items-center text-center">
+            <div class="w-24 h-24 mb-4 rounded-full bg-cyan-500/20 dark:bg-cyan-400/30 flex items-center justify-center text-3xl text-cyan-500 dark:text-cyan-300 border-4 border-white dark:border-gray-800">3</div>
+            <h3 class="font-semibold text-lg mb-2">Development</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Our team writes clean, efficient code to bring the approved design to life.</p>
+          </div>
+
+          <!-- Step 4: Launch -->
+          <div class="flex flex-col items-center text-center">
+            <div class="w-24 h-24 mb-4 rounded-full bg-cyan-500/20 dark:bg-cyan-400/30 flex items-center justify-center text-3xl text-cyan-500 dark:text-cyan-300 border-4 border-white dark:border-gray-800">4</div>
+            <h3 class="font-semibold text-lg mb-2">Launch</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">After thorough testing, we deploy your website and hand over the keys.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Testimonials Section -->
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="testimonials">
+    <div class="max-w-6xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-10">What Our Clients Say</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Testimonial Card 1 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-gray-900 hover:shadow-xl transition transform hover:-translate-y-1">
+          <p class="text-lg italic text-gray-700 dark:text-gray-200 mb-4">"Aruosa Tech delivered an outstanding and unique website that perfectly captured our company, The process was smooth, fast and professional!"</p>
+          <div class="flex items-center justify-center">
+            <img src="Mr C. Omo Osaghae.jpg" alt="Client 1" class="w-12 h-12 rounded-full mr-3">
+            <div>
+              <p class="font-semibold text-gray-800 dark:text-white">Mr C. Omo Osaghae</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">CEO, OmoAssociates.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Testimonial Card 2 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-gray-900 hover:shadow-xl transition transform hover:-translate-y-1">
+          <p class="text-lg italic text-gray-700 dark:text-gray-200 mb-4">"The websites done by AruosaTech for my brand Ebun’s Vault and other projects are so wonderfully detailed and graphically pleasing.
+          Highly recommended for anyone who has a business and needs a very good and professional website developer/manager."</p>
+          <div class="flex items-center justify-center">
+            <img src="Ebunoluwa Mary .jpg" alt="Client 2" class="w-12 h-12 rounded-full mr-3">
+            <div>
+              <p class="font-semibold text-gray-800 dark:text-white">Ebunoluwa Mary</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Founder, CEO Ebuns Vault.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Testimonial Card 3 -->
+        <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-gray-900 hover:shadow-xl transition transform hover:-translate-y-1">
+          <p class="text-lg italic text-gray-700 dark:text-gray-200 mb-4">"From concept to launch, Aruosa Tech was a pleasure to work with. They truly understood our vision and brought it to life."</p>
+          <div class="flex items-center justify-center">
+            <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="Client 3" class="w-12 h-12 rounded-full mr-3">
+            <div>
+              <p class="font-semibold text-gray-800 dark:text-white">David Lee</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Marketing Manager, Global Corp.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- See Samples -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="samples">
+    <div class="max-w-6xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-10">See Our Samples</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <img src="OmoAssociates Screenshot.png" alt="Omo & Associates" class="sample-image rounded-xl shadow-lg hover:scale-105 transition cursor-pointer" data-sample-id="omo-associates" />
+        <img src="Screenshot (37).png" alt="Ebun's Vault" class="sample-image rounded-xl shadow-lg hover:scale-105 transition cursor-pointer" data-sample-id="ebuns-vault" />
+        <img src="Screenshot (32).png" alt="Sample Project 3" class="sample-image rounded-xl shadow-lg hover:scale-105 transition cursor-pointer" data-sample-id="sample-3" />
+        <img src="Screenshot (38).png" alt="Sample Project 4" class="sample-image rounded-xl shadow-lg hover:scale-105 transition cursor-pointer" data-sample-id="sample-4" />
+      </div>
+
+      <!-- Modal Container -->
+      <div id="modal-container" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4"></div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const samplesData = {
+        'omo-associates': {
+          title: 'Omo & Associates Website',
+          images: [
+            'OmoAssociates Screenshot.png',
+            'Screenshot (41).png',
+            'Screenshot (46).png',
+            'Screenshot (47).png'
+          ]
+        },
+        'sample-3': {
+          title: "RCCG ORH",
+          images: [
+            'Screenshot (32).png',
+            'Screenshot (43).png',
+            'Screenshot (44).png',
+            'Screenshot (45).png'
+          ]
+        },
+        'ebuns-vault': {
+          title: 'Ebuns Vault E-commerce',
+          images: [
+            'Screenshot (37).png',
+            'Screenshot (42).png',
+          ]
+        },
+        'sample-4': {
+          title: 'Sample Project 4',
+          images: [
+            'Screenshot (38).png',
+            'Screenshot (39).png',
+            'Screenshot (40).png'
+          ]
+        }
+      };
+
+      const sampleImages = document.querySelectorAll('.sample-image');
+      const modalContainer = document.getElementById('modal-container');
+
+      sampleImages.forEach(img => {
+        img.addEventListener('click', () => {
+          const sampleId = img.dataset.sampleId;
+          const sampleData = samplesData[sampleId];
+          if (!sampleData) return;
+
+          const allImages = [...(sampleData.images || [])].filter(Boolean);
+          if (allImages.length === 0) {
+            allImages.push(`https://placehold.co/800x540/D1E0E0/0B2447?text=No+Image`);
+          }
+
+          modalContainer.innerHTML = `
+            <div class="bg-white dark:bg-gray-900 rounded-lg max-w-3xl w-full max-h-[90vh] flex flex-col text-left animate-scaleUp">
+              <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white break-words mr-4">${sampleData.title}</h3>
+                <button id="close-modal" class="text-3xl font-light text-gray-500 hover:text-gray-800 dark:hover:text-white">&times;</button>
+              </div>
+              <div class="p-4 overflow-y-auto">
+                <div class="relative mb-4">
+                  <div class="overflow-hidden rounded-lg relative h-96 bg-gray-100 dark:bg-gray-800">
+                    <div id="carousel-track" class="flex h-full transition-transform duration-300 ease-in-out">
+                      ${allImages.map(url => `<img src="${url}" class="w-full h-full object-contain flex-shrink-0">`).join("")}
+                    </div>
+                  </div>
+                  ${allImages.length > 1 ? `
+                    <button id="prev" class="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full leading-none hover:bg-black/60 focus:outline-none">&lt;</button>
+                    <button id="next" class="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full leading-none hover:bg-black/60 focus:outline-none">&gt;</button>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+
+          modalContainer.classList.remove('hidden');
+          modalContainer.classList.add('flex');
+
+          // Carousel Logic
+          if (allImages.length > 1) {
+            let index = 0;
+            const track = modalContainer.querySelector("#carousel-track");
+            const prevBtn = modalContainer.querySelector("#prev");
+            const nextBtn = modalContainer.querySelector("#next");
+
+            const updateCarousel = () => { track.style.transform = `translateX(-${index * 100}%)`; };
+
+            prevBtn.addEventListener("click", () => {
+              index = (index - 1 + allImages.length) % allImages.length;
+              updateCarousel();
+            });
+
+            nextBtn.addEventListener("click", () => {
+              index = (index + 1) % allImages.length;
+              updateCarousel();
+            });
+          }
+
+          // Close modal logic
+          const closeModal = () => {
+            modalContainer.classList.add('hidden');
+            modalContainer.classList.remove('flex');
+            modalContainer.innerHTML = '';
+          };
+
+          modalContainer.querySelector("#close-modal").addEventListener('click', closeModal);
+          modalContainer.addEventListener('click', (e) => {
+            if (e.target === modalContainer) {
+              closeModal();
+            }
+          });
+
+          document.addEventListener('keydown', function keydownHandler(event) {
+            if (event.key === 'Escape') {
+              closeModal();
+              document.removeEventListener('keydown', keydownHandler);
+            }
+          });
+        });
+      });
+    });
+  </script>
   <!-- Socials -->
-  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="socials">
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="socials">
     <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
       <h2 class="text-3xl font-bold mb-6">Connect With Me</h2>
       <div class="flex justify-center gap-8 text-3xl">
@@ -169,25 +486,101 @@
             <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3.5A5.5 5.5 0 1017.5 13 5.5 5.5 0 0012 7.5zM12 9a4 4 0 11-4 4 4 4 0 014-4zm5.8-2.7a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/>
           </svg>
         </a>
-        <!-- LinkedIn -->
-        <a href="#" class="hover:text-blue-700 transition" aria-label="LinkedIn">
+        <!-- GitHub -->
+        <a href="https://github.com/aruosatech360-png" class="hover:text-gray-400 transition" aria-label="GitHub" target="_blank">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19 3A2 2 0 0121 5v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.3 17v-7H6v7h2.3zm-1.1-8a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6zm10.8 8v-3.7c0-2-1.1-3-2.6-3-1.2 0-1.8.7-2.1 1.3h-.1V10H11v7h2.2v-3.6c0-.9.2-1.8 1.4-1.8s1.4 1 1.4 1.8V17H18z"/>
+            <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.38-3.88-1.38-.53-1.34-1.3-1.7-1.3-1.7-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.72 1.27 3.38.97.11-.75.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.72 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.19a11.03 11.03 0 012.9-.39c.99.01 1.99.13 2.92.39 2.2-1.5 3.17-1.19 3.17-1.19.64 1.58.24 2.75.12 3.04.74.81 1.19 1.84 1.19 3.1 0 4.45-2.71 5.43-5.29 5.72.42.37.8 1.11.8 2.24 0 1.62-.01 2.92-.01 3.32 0 .31.21.68.8.56A10.52 10.52 0 0023.5 12C23.5 5.73 18.27.5 12 .5z"/>
           </svg>
         </a>
       </div>
     </div>
   </section>
 
+  <!-- FAQ Section -->
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="faq">
+    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-10">Frequently Asked Questions</h2>
+      <div class="space-y-4 text-left">
+        <!-- FAQ Item 1 -->
+        <div class="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
+          <button class="faq-toggle w-full flex justify-between items-center text-lg font-semibold text-gray-800 dark:text-white focus:outline-none">
+            <span>How long does it take to build a website?</span>
+            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-content mt-2 text-gray-600 dark:text-gray-300 hidden">
+            <p>The timeline varies depending on the complexity and features required. A basic website can take 2-4 weeks, while more complex projects like e-commerce sites might take 6-12 weeks or more.</p>
+          </div>
+        </div>
+        <!-- FAQ Item 2 -->
+        <div class="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
+          <button class="faq-toggle w-full flex justify-between items-center text-lg font-semibold text-gray-800 dark:text-white focus:outline-none">
+            <span>What is included in your website packages?</span>
+            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-content mt-2 text-gray-600 dark:text-gray-300 hidden">
+            <p>Our packages typically include custom design, responsive development, content integration, basic SEO, and hosting setup. Premium packages offer advanced features like e-commerce, custom functionalities, and ongoing maintenance.</p>
+          </div>
+        </div>
+        <!-- FAQ Item 3 -->
+        <div class="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
+          <button class="faq-toggle w-full flex justify-between items-center text-lg font-semibold text-gray-800 dark:text-white focus:outline-none">
+            <span>Do you offer website maintenance and support?</span>
+            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-content mt-2 text-gray-600 dark:text-gray-300 hidden">
+            <p>Yes, we offer various maintenance plans to keep your website secure, updated, and performing optimally. This includes software updates, backups, security monitoring, and content changes.</p>
+          </div>
+        </div>
+        <!-- FAQ Item 4 -->
+        <div class="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
+          <button class="faq-toggle w-full flex justify-between items-center text-lg font-semibold text-gray-800 dark:text-white focus:outline-none">
+            <span>What if I need changes after the website is launched?</span>
+            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-content mt-2 text-gray-600 dark:text-gray-300 hidden">
+            <p>We offer post-launch support and can assist with any modifications or new features you might need. We can discuss these on a project-by-project basis or as part of a maintenance plan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact Us -->
-  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="contact">
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="contact">
     <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
       <h2 class="text-3xl font-bold mb-6">Contact Us</h2>
-      <p class="mb-6">We’d love to hear from you! Reach us directly via:</p>
+      <p class="mb-6">We’d love to hear from you! You can reach us directly, or download our agreement form to get started.</p>
       <div class="flex flex-col gap-4 items-center">
-        <a href="https://wa.me/+2347058293576" target="_blank" class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">💬 WhatsApp</a>
+        <a href="https://wa.me/2347058293576" target="_blank" class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">💬 WhatsApp</a>
         <a href="mailto:aruosatech360@gmail.com" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">✉️ Email</a>
         <a href="tel:+2347058293576" class="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition">📞 Call</a>
+        <div class="w-full border-t border-gray-300 dark:border-gray-700 my-4"></div>
+        <a href="Aruosa Tech Website Design Request and Agreement Form.docx" download class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">📄 Download Agreement Form</a>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Fill out the form and send it back to us via WhatsApp or Email.</p>
+      </div>
+    </div>
+  </section>
+
+   <!-- About Us -->
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 dark:text-white" id="about-us">
+    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-6">About Us</h2>
+      <p class="text-lg leading-relaxed">
+        We are a small team dedicated to building unique websites for our clients. Each project is tailored to fit your brand, vision, and goals.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- About Our CEO -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 dark:text-white" id="about">
+    <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+      <h2 class="text-3xl font-bold mb-6">About Our CEO</h2>
+      <div class="flex flex-col items-center gap-6">
+        <img src="Me 2.jpg" alt="Profile" class="w-40 h-40 rounded-full shadow-lg" />
+        <p class="text-lg leading-relaxed">
+          David is a passionate web developer who blends simplicity with functionality. His goal is to bring your ideas online with clean, modern design and smooth user experiences.
+        </p>
       </div>
     </div>
   </section>
@@ -204,45 +597,42 @@
 
   <!-- Animations -->
   <style>
+
+    /* Header typing + neon glow + pop-out animation */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: var(--chars, 3ch) }
+    }
+    .animate-typing {
+      animation: typing 1.5s steps(var(--steps, 3), end),
+                 blink 0.7s step-end infinite;
+      width: var(--chars, 3ch);
+      display: inline-block;
+      overflow: hidden;
+      border-right: 2px solid currentColor;
+      box-sizing: content-box;
+    }
+
+    /* Neon glow used by header toggle */
+    .glow {
+      text-shadow: 0 0 8px currentColor, 0 0 16px currentColor, 0 0 24px currentColor;
+      transition: color 0.5s, text-shadow 0.5s;
+    }
+
+    /* Pop-out animation for header container */
+    @keyframes scaleUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-scaleUp {
+      animation: scaleUp 0.3s ease-out;
+    }
+
     .animate-fadeIn { animation: fadeIn 2s ease-in-out; }
     .animate-fadeInUp { animation: fadeInUp 1s ease-in-out; }
     @keyframes fadeIn { from {opacity:0} to {opacity:1} }
     @keyframes fadeInUp { from {opacity:0; transform:translateY(30px)} to {opacity:1; transform:translateY(0)} }
   </style>
-
-  <!-- Dark Mode Script -->
-  <script>
-    const darkToggleButton = document.getElementById('darkToggle');
-    const htmlElement = document.documentElement;
-
-    // Function to update the button icon based on the current theme
-    const updateButton = () => {
-      if (darkToggleButton) { // Check if the button exists
-        if (htmlElement.classList.contains('dark')) {
-          darkToggleButton.innerHTML = '☀️'; // Sun icon
-        } else {
-          darkToggleButton.innerHTML = '🌙'; // Moon icon
-        }
-      }
-    };
-
-    // Set the initial icon state when the script runs
-    updateButton();
-
-    // Add the click event listener to the toggle button
-    if (darkToggleButton) {
-      darkToggleButton.addEventListener('click', () => {
-        // Toggle the 'dark' class on the <html> element
-        htmlElement.classList.toggle('dark');
-        
-        // Update the theme in localStorage
-        localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
-
-        // Update the button icon to reflect the new theme
-        updateButton();
-      });
-    }
-  </script>
 
 <style>
   body { font-family: 'Inter', sans-serif; }
@@ -251,10 +641,10 @@
     transition: opacity 0.5s ease-out;
   }
   @keyframes blink {
-    50% { opacity: 0; }
+    50% { border-color: transparent; opacity: 0; }
   }
   .dot-1, .dot-2, .dot-3 {
-    animation: blink 1.4s infinite;
+    animation: blink 1.4s infinite both;
   }
   .dot-1 { animation-delay: 0.2s; }
   .dot-2 { animation-delay: 0.4s; }
@@ -289,6 +679,70 @@
       }
     });
   </script>
+
+  <!-- Header scripts (mobile menu + typing animation) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Mobile menu functionality
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const menuIcon = document.querySelector(".mobile-menu-icon");
+
+      mobileMenuButton.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.toggle("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", (!isOpen).toString());
+        
+        // Update menu icon
+        if (!isOpen) {
+          menuIcon.setAttribute("d", "M6 18L18 6M6 6l12 12");
+        } else {
+          menuIcon.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+        }
+      });
+
+      // Code symbol animation
+      const toggle = document.getElementById("header-toggle");
+      
+      // Simplified list of symbols
+      const items = ["&lt;/&gt;", "{ }", "[ ]", "( )", "&lt;?&gt;"];
+
+      let index = 0;
+
+      function restartTyping() {
+        toggle.classList.remove("animate-typing");
+        void toggle.offsetWidth; // reflow
+
+        // Update symbol
+        const currentSymbol = items[index];
+        toggle.innerHTML = currentSymbol;
+
+        const chars = currentSymbol.replace(/&.*?;/g, "X").length;
+        toggle.style.setProperty("--chars", chars + "ch");
+        toggle.style.setProperty("--steps", chars);
+
+        toggle.classList.add("animate-typing");
+        index = (index + 1) % items.length;
+      }
+
+      // Start immediately
+      restartTyping();
+      setInterval(restartTyping, 4000);
+    });
+  </script>
+  
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('svg');
+
+        content.classList.toggle('hidden');
+        icon.classList.toggle('rotate-180'); // Rotate arrow icon
+      });
+    });
+  </script>
+
 
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
